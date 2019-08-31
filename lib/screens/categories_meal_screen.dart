@@ -26,6 +26,7 @@ class CategoriesMealScreen extends StatelessWidget {
             final meal = categoriesMeal[index];
 
             return MealItem(
+              id: meal.id,
               title: meal.title,
               duration: meal.duration,
               complexity: meal.complexity,
