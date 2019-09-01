@@ -4,15 +4,30 @@ import '../widgets/main_drawer.dart';
 class FiltersScreen extends StatefulWidget {
   static const String routeName = '/filters-screen';
 
+  final Function saveFilters;
+  final Map<String, bool> currentFilters;
+  FiltersScreen(this.currentFilters, this.saveFilters);
+
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  bool _glutenFree = false;
+  bool _gluten = false;
   bool _vegetarian = false;
   bool _vegan = false;
-  bool _lactoseFree = false;
+  bool _lactose = false;
+
+  @override
+  void initState() { 
+    _gluten = widget.currentFilters['gluten'];
+    _vegan = widget.currentFilters['vegan'];
+    _vegetarian = widget.currentFilters['vegetarian'];
+    _lactose = widget.currentFilters['lactose'];
+
+    super.initState();
+    
+  }
 
   Widget buildSwitchTitle(String title, String description, bool currentValue,
       Function updateValue) {
@@ -29,6 +44,21 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Filters'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              final finalFilters = {
+                'gluten': _gluten,
+                'vegan': _vegan,
+                'vegetarian': _vegetarian,
+                'lactose': _lactose,
+              };
+
+              widget.saveFilters(finalFilters);
+            },
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -44,23 +74,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 buildSwitchTitle(
                     'Gluten-Free',
                     'Only include gluten free meals',
-                    _glutenFree, (bool value) {
+                    _gluten, (bool value) {
                   setState(() {
-                    _glutenFree = value;
+                    _gluten = value;
                   });
                 }),
                 buildSwitchTitle(
                     'Lactose-Free',
                     'Only include lactose free meals',
-                    _lactoseFree, (bool value) {
+                    _lactose, (bool value) {
                   setState(() {
-                    _lactoseFree = value;
+                    _lactose = value;
                   });
                 }),
                 buildSwitchTitle(
-                    'Vegan-Free',
-                    'Only include vegan free meals',
-                    _vegan, (bool value) {
+                    'Vegan-Free', 'Only include vegan free meals', _vegan,
+                    (bool value) {
                   setState(() {
                     _vegan = value;
                   });
