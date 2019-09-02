@@ -18,13 +18,12 @@ class _CategoriesMealScreenState extends State<CategoriesMealScreen> {
   bool _loadedInitData = false;
   @override
   void initState() {
-    
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    if(!_loadedInitData) {
+    if (!_loadedInitData) {
       final routeArgs =
           ModalRoute.of(context).settings.arguments as Map<String, String>;
 
@@ -37,7 +36,7 @@ class _CategoriesMealScreenState extends State<CategoriesMealScreen> {
     }
     super.didChangeDependencies();
   }
-  
+
   void _removeMeal(String id) {
     setState(() {
       displayedMeal.removeWhere((meal) => meal.id == id);
@@ -46,8 +45,6 @@ class _CategoriesMealScreenState extends State<CategoriesMealScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle),
@@ -58,7 +55,6 @@ class _CategoriesMealScreenState extends State<CategoriesMealScreen> {
             final meal = displayedMeal[index];
 
             return MealItem(
-              removeItem: _removeMeal,
               id: meal.id,
               title: meal.title,
               duration: meal.duration,
